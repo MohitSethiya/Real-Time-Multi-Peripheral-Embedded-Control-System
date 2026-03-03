@@ -1,7 +1,9 @@
 # Real-Time Embedded Motor Control & Monitoring System
 
 **Platform:** TM4C123GH6PM (ARM Cortex-M4)
+
 **Language:** C (Bare-Metal)
+
 **Architecture:** Interrupt-Driven, Modular Driver-Based Design
 
 ------------------------------------------------------------------------
