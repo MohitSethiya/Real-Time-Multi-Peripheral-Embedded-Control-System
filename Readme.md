@@ -1,152 +1,193 @@
-# Real-Time Embedded Motor Control & Monitoring System
 
-**Platform:** TM4C123GH6PM (ARM Cortex-M4)
+# ⚡ Mixed-Signal Real-Time Embedded Motor Control Platform
 
-**Language:** C (Bare-Metal)
-
-**Architecture:** Interrupt-Driven, Modular Driver-Based Design
-
-------------------------------------------------------------------------
-
-## Overview
-
-This project implements a real-time embedded control and monitoring
-system on the TM4C123GH6PM microcontroller. The system integrates
-multiple hardware peripherals including ADC, UART, I2C devices, PWM
-motor driver, QEI encoder feedback, LCD interface, and external I/O
-expanders.
-
-The firmware is designed using a modular driver architecture with
-interrupt-driven task handling. It supports both manual and automatic
-control modes and demonstrates closed-loop motor control with real-time
-sensor monitoring.
+**Microcontroller:** TM4C123GH6PM (ARM Cortex-M4)\
+**Firmware Type:** Bare-Metal (Interrupt-Driven)\
+**Design Scope:** Full Custom Hardware + Firmware Integration
 
 ------------------------------------------------------------------------
 
-## Key Features
+## 📌 Project Summary
 
--   Real-time motor speed control with QEI feedback
--   Multi-channel ADC data acquisition
--   Manual and automatic control modes
--   UART-based command-line interface (CLI)
--   I2C multi-device integration (RTC, IO Expander, DAC)
--   Periodic task scheduling using SysTick
--   Interrupt-driven architecture
--   Modular peripheral drivers
+This project implements a complete mixed-signal embedded control system
+designed, built, and validated from schematic to physical hardware. The
+system integrates real-time motor control, analog signal acquisition,
+multi-device I2C communication, UART diagnostics, and a high-power
+H-bridge motor driver stage.
 
 ------------------------------------------------------------------------
 
-## System Architecture
+# 📄 Hardware Design Files
 
-### Core Components
+## 🔹 Schematic (PDF)
 
--   **TM4C123GH6PM Microcontroller**
--   **Motor Control Subsystem**
-    -   PWM output
-    -   QEI speed feedback
--   **Sensor Subsystem**
-    -   Voltage measurement
-    -   Ambient temperature
-    -   Internal temperature
--   **Communication Subsystem**
-    -   UART CLI
-    -   I2C (RTC, IO Expander, DAC)
--   **User Interface**
-    -   LCD display
-    -   Push buttons with software debouncing
+Full hardware schematic (Rev 002):
+
+![EL507-202508-LAB012-SCH001](https://github.com/user-attachments/assets/fe6662da-7cf1-452d-a3e2-1bc8ac3dfa4b)
+
+
+
+This schematic defines: - Power regulation architecture (+12V, +5V,
++3.3V, +3.3VA) - TM4C123GH6PM microcontroller integration - Analog
+signal conditioning stage - I2C bus devices (RTC, IO Expander, DAC) -
+LCD interface - H-bridge motor driver stage (HIP4082 + MOSFETs) - QEI
+encoder interface - Decoupling and power filtering networks
 
 ------------------------------------------------------------------------
 
-## Firmware Design
+## 🔹 Physical Breadboard Implementation
 
-### Initialization Layer
+Actual hardware build of the schematic:
 
--   System clock configuration
--   SysTick timer setup
--   Peripheral initialization (ADC, UART, I2C, QEI, PWM, LCD)
--   Driver-level configuration
+![RUID717566d423e942928adba23f8b0fff25](https://github.com/user-attachments/assets/157b2e78-109c-4dea-84b1-c9b9e0858f8c)
 
-### Real-Time Execution Model
 
-The system uses:
+The breadboard implementation demonstrates: - Complete multi-rail power
+distribution - Analog and digital domain separation - H-bridge motor
+driver wiring - LCD interface integration - I2C peripheral grouping -
+Real motor testing and validation
 
--   SysTick interrupts for periodic scheduling
--   Event flag-based processing
--   Low-power wait state (`__wfi()`) in the main loop
-
-This ensures deterministic behavior and efficient CPU utilization.
+This validates the schematic design in physical hardware.
 
 ------------------------------------------------------------------------
 
-## Motor Control Strategy
+# 🧱 System Architecture
+
+### Core Subsystems
+
+-   ARM Cortex-M4 Microcontroller (TM4C123GH6PM)
+-   Multi-rail Power Regulation
+-   Analog Front-End (Op-Amps + Temperature Sensor)
+-   I2C Peripheral Network (RTC, IO Expander, DAC)
+-   UART Command-Line Interface
+-   LCD Display Interface
+-   H-Bridge Motor Driver
+-   Quadrature Encoder Feedback (QEI)
+
+------------------------------------------------------------------------
+
+# 🔋 Power Architecture
+
+-   +12V rail for motor stage
+-   +5V rail for logic/interface
+-   +3.3V digital rail
+-   +3.3VA analog rail
+-   MCP1700 LDO regulators
+-   Dedicated analog ground (GNDA)
+-   Bulk capacitors for motor stabilization
+
+Demonstrates proper mixed-signal power isolation and integrity planning.
+
+------------------------------------------------------------------------
+
+# 🧠 Microcontroller Features Used
+
+-   PWM generation (M0PWM0 / M0PWM1)
+-   QEI speed feedback decoding
+-   Multi-channel ADC sampling
+-   I2C master communication
+-   UART serial interface
+-   SysTick interrupt scheduling
+-   External crystal oscillators
+-   JTAG programming interface
+
+------------------------------------------------------------------------
+
+# 🎛 Motor Control System
 
 ### Manual Mode
 
--   User selects predefined RPM values via UART input (0--9 keys)
--   Speed is directly mapped to motor setpoint
+-   Fixed RPM setpoints via UART commands
 
 ### Automatic Mode
 
--   Motor speed is derived from analog input voltage
--   QEI feedback provides real-time speed monitoring
--   PWM duty cycle adjusts dynamically
+-   ADC voltage input scales motor speed
+-   QEI feedback monitors real-time RPM
+-   PWM dynamically controls motor output
+
+Motor driver implemented using: - HIP4082 high/low-side driver -
+N-channel MOSFET H-bridge - Bootstrap capacitors - Flyback diodes - 12V
+motor supply filtering
 
 ------------------------------------------------------------------------
 
-## Data Acquisition
+# 📊 Data Acquisition
 
 -   Multi-channel ADC sampling
 -   Voltage scaling and conversion
--   External and internal temperature calculations
--   Automatic triggering via SysTick
-
-Sensor outputs are accessible via UART CLI and LCD display.
+-   Ambient temperature measurement
+-   Internal temperature monitoring
+-   Periodic sampling via SysTick
 
 ------------------------------------------------------------------------
 
-## UART Command Interface
+# 🔌 I2C Peripheral Network
 
-The system supports:
+Devices on shared I2C bus:
 
--   Date & time display (RTC integration)
+-   MCP7940M -- Real-Time Clock
+-   PCF8574A -- I/O Expander
+-   MAX518 -- DAC
+
+Features: - 4.7kΩ pull-up resistors - Multi-device addressing - Periodic
+polling and updates
+
+------------------------------------------------------------------------
+
+# 🖥 UART Command Interface
+
+Supports:
+
+-   Date and time display
 -   Motor speed reporting (RPM)
 -   Temperature monitoring
--   Mode switching (Manual/Automatic)
--   LED control
--   System reset commands
+-   Mode switching (Manual / Automatic)
+-   LED toggling
+-   System reset
 -   Help menu
 
 ------------------------------------------------------------------------
 
-## Embedded Concepts Demonstrated
+# ⏱ Firmware Architecture
 
--   ARM Cortex-M architecture
--   Register-level peripheral configuration
+-   Bare-metal interrupt-driven design
+-   SysTick-based periodic scheduling
+-   Event flag synchronization
+-   Modular driver abstraction
+-   Low-power main loop using `__wfi()`
+
+Ensures deterministic real-time performance.
+
+------------------------------------------------------------------------
+
+# 🛠 Engineering Concepts Demonstrated
+
+-   ARM Cortex-M4 architecture
+-   Register-level programming
 -   Interrupt-driven firmware design
--   SysTick-based task scheduling
--   ADC triggering and data processing
+-   ADC signal conditioning
 -   PWM motor control
--   Quadrature Encoder Interface (QEI)
--   I2C multi-device communication
--   UART CLI implementation
--   Debouncing and input conditioning
--   Modular driver-based firmware structure
+-   Closed-loop feedback using QEI
+-   Multi-device I2C bus communication
+-   Mixed-signal hardware design
+-   Hardware bring-up and validation
 
 ------------------------------------------------------------------------
 
-## Potential Enhancements
+# 🚀 Future Improvements
 
--   PID-based closed-loop motor control
--   FreeRTOS integration
--   CAN or Ethernet communication support
--   Data logging to non-volatile memory
--   Bootloader implementation
+-   PID-based motor control
+-   RTOS integration
+-   CAN/Ethernet communication
+-   PCB implementation
+-   Data logging to flash
+-   Bootloader support
 
 ------------------------------------------------------------------------
 
-## Conclusion
+# 🏁 Conclusion
 
-This project demonstrates the design and implementation of a complete
-real-time embedded control system integrating sensing, communication,
-motor control, and user interaction. It reflects strong firmware
-development fundamentals and practical embedded systems experience.
+This project represents a complete embedded hardware--firmware system
+integrating sensing, communication, user interface, and high-power motor
+control. It demonstrates industry-level embedded engineering capability
+from schematic design to physical system validation.
