@@ -1,5 +1,5 @@
 
-# ⚡ Mixed-Signal Real-Time Embedded Motor Control Platform
+# ⚡ Real-Time Multi-Peripheral Embedded Control System
 
 **Microcontroller:** TM4C123GH6PM (ARM Cortex-M4)\
 **Firmware Type:** Bare-Metal (Interrupt-Driven)\
