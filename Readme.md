@@ -1,7 +1,7 @@
 # Real-Time Embedded Motor Control & Monitoring System
 
-**Platform:** TM4C123GH6PM (ARM Cortex-M4)\
-**Language:** C (Bare-Metal)\
+**Platform:** TM4C123GH6PM (ARM Cortex-M4)
+**Language:** C (Bare-Metal)
 **Architecture:** Interrupt-Driven, Modular Driver-Based Design
 
 ------------------------------------------------------------------------
@@ -23,13 +23,13 @@ sensor monitoring.
 
 ## Key Features
 
--   Real-time motor speed control with QEI feedback\
--   Multi-channel ADC data acquisition\
--   Manual and automatic control modes\
--   UART-based command-line interface (CLI)\
--   I2C multi-device integration (RTC, IO Expander, DAC)\
--   Periodic task scheduling using SysTick\
--   Interrupt-driven architecture\
+-   Real-time motor speed control with QEI feedback
+-   Multi-channel ADC data acquisition
+-   Manual and automatic control modes
+-   UART-based command-line interface (CLI)
+-   I2C multi-device integration (RTC, IO Expander, DAC)
+-   Periodic task scheduling using SysTick
+-   Interrupt-driven architecture
 -   Modular peripheral drivers
 
 ------------------------------------------------------------------------
@@ -59,17 +59,17 @@ sensor monitoring.
 
 ### Initialization Layer
 
--   System clock configuration\
--   SysTick timer setup\
--   Peripheral initialization (ADC, UART, I2C, QEI, PWM, LCD)\
+-   System clock configuration
+-   SysTick timer setup
+-   Peripheral initialization (ADC, UART, I2C, QEI, PWM, LCD)
 -   Driver-level configuration
 
 ### Real-Time Execution Model
 
 The system uses:
 
--   SysTick interrupts for periodic scheduling\
--   Event flag-based processing\
+-   SysTick interrupts for periodic scheduling
+-   Event flag-based processing
 -   Low-power wait state (`__wfi()`) in the main loop
 
 This ensures deterministic behavior and efficient CPU utilization.
@@ -93,9 +93,9 @@ This ensures deterministic behavior and efficient CPU utilization.
 
 ## Data Acquisition
 
--   Multi-channel ADC sampling\
--   Voltage scaling and conversion\
--   External and internal temperature calculations\
+-   Multi-channel ADC sampling
+-   Voltage scaling and conversion
+-   External and internal temperature calculations
 -   Automatic triggering via SysTick
 
 Sensor outputs are accessible via UART CLI and LCD display.
@@ -106,38 +106,38 @@ Sensor outputs are accessible via UART CLI and LCD display.
 
 The system supports:
 
--   Date & time display (RTC integration)\
--   Motor speed reporting (RPM)\
--   Temperature monitoring\
--   Mode switching (Manual/Automatic)\
--   LED control\
--   System reset commands\
+-   Date & time display (RTC integration)
+-   Motor speed reporting (RPM)
+-   Temperature monitoring
+-   Mode switching (Manual/Automatic)
+-   LED control
+-   System reset commands
 -   Help menu
 
 ------------------------------------------------------------------------
 
 ## Embedded Concepts Demonstrated
 
--   ARM Cortex-M architecture\
--   Register-level peripheral configuration\
--   Interrupt-driven firmware design\
--   SysTick-based task scheduling\
--   ADC triggering and data processing\
--   PWM motor control\
--   Quadrature Encoder Interface (QEI)\
--   I2C multi-device communication\
--   UART CLI implementation\
--   Debouncing and input conditioning\
+-   ARM Cortex-M architecture
+-   Register-level peripheral configuration
+-   Interrupt-driven firmware design
+-   SysTick-based task scheduling
+-   ADC triggering and data processing
+-   PWM motor control
+-   Quadrature Encoder Interface (QEI)
+-   I2C multi-device communication
+-   UART CLI implementation
+-   Debouncing and input conditioning
 -   Modular driver-based firmware structure
 
 ------------------------------------------------------------------------
 
 ## Potential Enhancements
 
--   PID-based closed-loop motor control\
--   FreeRTOS integration\
--   CAN or Ethernet communication support\
--   Data logging to non-volatile memory\
+-   PID-based closed-loop motor control
+-   FreeRTOS integration
+-   CAN or Ethernet communication support
+-   Data logging to non-volatile memory
 -   Bootloader implementation
 
 ------------------------------------------------------------------------
