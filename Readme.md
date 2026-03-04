@@ -176,7 +176,6 @@ Ensures deterministic real-time performance.
 
 # 🚀 Future Improvements
 
--   PID-based motor control
 -   RTOS integration
 -   CAN/Ethernet communication
 -   PCB implementation
