@@ -190,3 +190,11 @@ This project represents a complete embedded hardware--firmware system
 integrating sensing, communication, user interface, and high-power motor
 control. It demonstrates industry-level embedded engineering capability
 from schematic design to physical system validation.
+
+-----------------------------------------------------------------------
+
+
+# 👨‍💻 Author
+
+**Mohit Sethiya**  
+Embedded Systems Student  
